@@ -25,7 +25,6 @@
     </div>
 </div>
 
-@push('js-stack')
 <script>
     $( document ).ready(function() {
         $('#modal-delete-confirmation').on('show.bs.modal', function (event) {
@@ -51,4 +50,3 @@
         });
     });
 </script>
-@endpush

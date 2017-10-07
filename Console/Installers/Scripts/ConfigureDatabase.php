@@ -4,8 +4,6 @@ namespace Modules\Core\Console\Installers\Scripts;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Database\Connectors\ConnectionFactory;
-use Illuminate\Database\DatabaseManager;
 use Modules\Core\Console\Installers\SetupScript;
 use Modules\Core\Console\Installers\Writers\EnvFileWriter;
 use PDOException;
@@ -48,17 +46,15 @@ class ConfigureDatabase implements SetupScript
 
         $connected = false;
 
-        $vars = [];
-
         while (! $connected) {
-            $vars['db_driver'] = $this->askDatabaseDriver();
-            $vars['db_host'] = $this->askDatabaseHost();
-            $vars['db_port'] = $this->askDatabasePort($vars['db_driver']);
-            $vars['db_database'] = $this->askDatabaseName();
-            $vars['db_username'] = $this->askDatabaseUsername();
-            $vars['db_password'] = $this->askDatabasePassword();
+            $driver = $this->askDatabaseDriver();
+            $host = $this->askDatabaseHost();
+            $port = $this->askDatabasePort($driver);
+            $name = $this->askDatabaseName();
+            $user = $this->askDatabaseUsername();
+            $password = $this->askDatabasePassword();
 
-            $this->setLaravelConfiguration($vars);
+            $this->setLaravelConfiguration($driver, $host, $port, $name, $user, $password);
 
             if ($this->databaseConnectionIsValid()) {
                 $connected = true;
@@ -67,7 +63,7 @@ class ConfigureDatabase implements SetupScript
             }
         }
 
-        $this->env->write($vars);
+        $this->env->write($driver, $host, $port, $name, $user, $password);
 
         $command->info('Database successfully configured');
     }
@@ -145,21 +141,20 @@ class ConfigureDatabase implements SetupScript
     }
 
     /**
-     * @param array $vars
+     * @param $driver
+     * @param $name
+     * @param $port
+     * @param $user
+     * @param $password
      */
-    protected function setLaravelConfiguration($vars)
+    protected function setLaravelConfiguration($driver, $host, $port, $name, $user, $password)
     {
-        $driver = $vars['db_driver'];
-
         $this->config['database.default'] = $driver;
-        $this->config['database.connections.' . $driver . '.host'] = $vars['db_host'];
-        $this->config['database.connections.' . $driver . '.port'] = $vars['db_port'];
-        $this->config['database.connections.' . $driver . '.database'] = $vars['db_database'];
-        $this->config['database.connections.' . $driver . '.username'] = $vars['db_username'];
-        $this->config['database.connections.' . $driver . '.password'] = $vars['db_password'];
-
-        app(DatabaseManager::class)->purge($driver);
-        app(ConnectionFactory::class)->make($this->config['database.connections.' . $driver], $driver);
+        $this->config['database.connections.' . $driver . '.host'] = $host;
+        $this->config['database.connections.' . $driver . '.port'] = $port;
+        $this->config['database.connections.' . $driver . '.database'] = $name;
+        $this->config['database.connections.' . $driver . '.username'] = $user;
+        $this->config['database.connections.' . $driver . '.password'] = $password;
     }
 
     /**
@@ -169,7 +164,7 @@ class ConfigureDatabase implements SetupScript
     protected function databaseConnectionIsValid()
     {
         try {
-            app('db')->reconnect()->getPdo();
+            app('db')->reconnect();
 
             return true;
         } catch (PDOException $e) {

@@ -51,15 +51,13 @@ class InstallCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function fire()
     {
         $this->blockMessage('Welcome!', 'Starting the installation process...', 'comment');
 
         $success = $this->installer->stack([
             \Modules\Core\Console\Installers\Scripts\ProtectInstaller::class,
-            \Modules\Core\Console\Installers\Scripts\CreateEnvFile::class,
             \Modules\Core\Console\Installers\Scripts\ConfigureDatabase::class,
-            \Modules\Core\Console\Installers\Scripts\ConfigureAppUrl::class,
             \Modules\Core\Console\Installers\Scripts\SetAppKey::class,
             \Modules\Core\Console\Installers\Scripts\ConfigureUserProvider::class,
             \Modules\Core\Console\Installers\Scripts\ModuleMigrator::class,
@@ -67,7 +65,6 @@ class InstallCommand extends Command
             \Modules\Core\Console\Installers\Scripts\ModuleAssets::class,
             \Modules\Core\Console\Installers\Scripts\ThemeAssets::class,
             \Modules\Core\Console\Installers\Scripts\UnignoreComposerLock::class,
-            \Modules\Core\Console\Installers\Scripts\UnignorePackageLock::class,
             \Modules\Core\Console\Installers\Scripts\SetInstalledFlag::class,
         ])->install($this);
 

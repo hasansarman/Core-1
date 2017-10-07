@@ -2,8 +2,6 @@
 
 namespace Modules\Core\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
-
 /**
  * Interface CoreRepository
  * @package Modules\Core\Repositories
@@ -21,11 +19,6 @@ interface BaseRepository
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function all();
-
-    /**
-     * @return Builder
-     */
-    public function allWithBuilder() : Builder;
 
     /**
      * Paginate the model to $perPage items per page

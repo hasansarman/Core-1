@@ -1,35 +1,5 @@
 url: https://github.com/AsgardCms/Platform
 versions:
-    "3.1.0@unreleased":
-        added:
-            - Carbon format set globally in <code>AppServiceProvider</code>
-            - Creating a string helpers mixing file
-            - Add additional install script to prompt for APP_URL
-            - New install script to un ignore the <code>package-lock.json</code> file from npm
-        changed:
-            - Registering the TranslationHelper mixin globally to access it from anywhere
-            - CkEditor and SimpleMde hooks set a view variable containing their name
-            - Refactoring the .env local file writer
-            - Tell users about the -f force flag for the asgard installer
-            - Update the message displayed while the admin user is created.
-            - Fixed issue when <code>hideDefaultLocaleInURL</code> was set to true making VueJS routes not working
-            - Removed default loading of unneeded assets
-            - Getting pdo object, making sure the database connection is valid
-            - Installation, set the application key ourself, based of laravel command
-            - Installation, only display success message for app_url on --verbose flag
-            - Updated <code>config/breadcasting.php</code> pusher config to match laravel upstream
-    "3.0.0":
-        added:
-            - Created a vue component for the delete buttons on index pages
-            - Created a vue component for CkEditor
-            - Created vue component to more easily translate laravel translations
-        changed:
-            - Replacing URL::route() by route() helper
-            - Updated menu ordering in Content section. Leaving spots in between for custom modules.
-            - Update menu ordering in Workshop section. Leaving spots in between for custom modules.
-            - Handle unauthorized and unauthenticated responses on Axios
-            - <code>Authorization</code> middleware now throws a 403 FORBIDDEN response instead of 401 to match HTTP spec.
-            - <code>AdminMiddleware</code> can now handle ajax requests
     "2.6.1":
         changed:
             - Fixing installation having 2x port in <code>.env</code>

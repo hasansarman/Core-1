@@ -20,7 +20,7 @@ return [
     | Which administration theme to use for the back end interface
     |--------------------------------------------------------------------------
     */
-    'admin-theme' => 'AdminLTE',
+    'admin-theme' => 'Akrep',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     | colors are available for you to use: skin-blue, skin-green,
     | skin-black, skin-purple, skin-red and skin-yellow.
     */
-    'skin' => 'skin-blue',
+    'skin' => 'skin-red',
 
    /*
    |--------------------------------------------------------------------------
@@ -69,7 +69,6 @@ return [
        'frontend' => [
        ],
        'api' => [
-           'api',
        ],
     ],
 
@@ -106,7 +105,7 @@ return [
         'jquery.dataTables.js' => ['theme' => 'vendor/datatables.net/js/jquery.dataTables.min.js'],
         'dataTables.bootstrap.js' => ['theme' => 'vendor/datatables.net-bs/js/dataTables.bootstrap.min.js'],
         'jquery.slug.js' => ['theme' => 'js/vendor/jquery.slug.js'],
-        'adminlte.js' => ['theme' => 'vendor/admin-lte/dist/js/adminlte.min.js'],
+        'app.js' => ['theme' => 'vendor/admin-lte/dist/js/app.js'],
         'keypressAction.js' => ['module' => 'core:js/keypressAction.js'],
         'ckeditor.js' => ['theme' => 'js/vendor/ckeditor/ckeditor.js'],
         'lodash.js' => ['module' => 'dashboard:vendor/lodash/lodash.min.js'],
@@ -137,6 +136,8 @@ return [
         'css' => [
             'bootstrap.css',
             'font-awesome.css',
+            'alertify.core.css',
+            'alertify.default.css',
             'dataTables.bootstrap.css',
             'icheck.blue.css',
             'AdminLTE.css',
@@ -149,12 +150,13 @@ return [
         'js' => [
             'bootstrap.js',
             'mousetrap.js',
+            'alertify.js',
             'icheck.js',
             'jquery.dataTables.js',
             'dataTables.bootstrap.js',
             'jquery.slug.js',
             'keypressAction.js',
-            'adminlte.js',
+            'app.js',
             'pace.js',
             'selectize.js',
             'main.js',
@@ -165,11 +167,6 @@ return [
     |--------------------------------------------------------------------------
     | Enable module view overrides at theme locations
     |--------------------------------------------------------------------------
-    | By default you can only have module views in resources/views/asgard/[module]
-    | setting this setting to true will add ability for you to store those views
-    | in any of front or backend themes in my-theme/views/modules/[module]/...
-    |
-    | useViewNamespaces.backend-theme needs to be enabled at module level
     */
     'enable-theme-overrides' => false,
 ];

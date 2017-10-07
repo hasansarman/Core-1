@@ -4,7 +4,6 @@ namespace Modules\Core\Http\Middleware;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Session\Store;
 use Modules\User\Contracts\Authentication;
@@ -52,9 +51,6 @@ class AdminMiddleware
     {
         // Check if the user is logged in
         if (!$this->auth->check()) {
-            if ($request->ajax()) {
-                return response('Unauthenticated.', Response::HTTP_UNAUTHORIZED);
-            }
             // Store the current uri in the session
             $this->session->put('url.intended', $this->request->url());
 
@@ -65,7 +61,7 @@ class AdminMiddleware
         // Check if the user has access to the dashboard page
         if (! $this->auth->hasAccess('dashboard.index')) {
             // Show the insufficient permissions page
-            return $this->application->abort(Response::HTTP_FORBIDDEN);
+            return $this->application->abort(403);
         }
 
         return $next($request);

@@ -10,7 +10,7 @@ class PublishThemeAssetsCommand extends Command
     protected $name = 'asgard:publish:theme';
     protected $description = 'Publish theme assets';
 
-    public function handle()
+    public function fire()
     {
         $theme = $this->argument('theme', null);
 

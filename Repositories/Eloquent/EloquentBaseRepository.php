@@ -44,22 +44,10 @@ abstract class EloquentBaseRepository implements BaseRepository
     public function all()
     {
         if (method_exists($this->model, 'translations')) {
-            return $this->model->with('translations')->orderBy('created_at', 'DESC')->get();
+            return $this->model->with('translations')->orderBy('IDATE', 'DESC')->get();
         }
 
-        return $this->model->orderBy('created_at', 'DESC')->get();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function allWithBuilder() : Builder
-    {
-        if (method_exists($this->model, 'translations')) {
-            return $this->model->with('translations');
-        }
-
-        return $this->model;
+        return $this->model->orderBy('IDATE', 'DESC')->get();
     }
 
     /**
@@ -68,10 +56,10 @@ abstract class EloquentBaseRepository implements BaseRepository
     public function paginate($perPage = 15)
     {
         if (method_exists($this->model, 'translations')) {
-            return $this->model->with('translations')->orderBy('created_at', 'DESC')->paginate($perPage);
+            return $this->model->with('translations')->orderBy('IDATE', 'DESC')->paginate($perPage);
         }
 
-        return $this->model->orderBy('created_at', 'DESC')->paginate($perPage);
+        return $this->model->orderBy('IDATE', 'DESC')->paginate($perPage);
     }
 
     /**
@@ -106,8 +94,8 @@ abstract class EloquentBaseRepository implements BaseRepository
     public function allTranslatedIn($lang)
     {
         return $this->model->whereHas('translations', function (Builder $q) use ($lang) {
-            $q->where('locale', "$lang");
-        })->with('translations')->orderBy('created_at', 'DESC')->get();
+            $q->where('LOCALE', "$lang");
+        })->with('translations')->orderBy('IDATE', 'DESC')->get();
     }
 
     /**
@@ -117,11 +105,11 @@ abstract class EloquentBaseRepository implements BaseRepository
     {
         if (method_exists($this->model, 'translations')) {
             return $this->model->whereHas('translations', function (Builder $q) use ($slug) {
-                $q->where('slug', $slug);
+                $q->where('SLUG', $slug);
             })->with('translations')->first();
         }
 
-        return $this->model->where('slug', $slug)->first();
+        return $this->model->where('SLUG', $slug)->first();
     }
 
     /**
@@ -181,7 +169,7 @@ abstract class EloquentBaseRepository implements BaseRepository
             $query = $query->with('translations');
         }
 
-        return $query->whereIn("id", $ids)->get();
+        return $query->whereIn("ID", $ids)->get();
     }
 
     /**
